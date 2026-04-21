@@ -47,3 +47,11 @@ jobs:
           kubectl apply -f redis_deployment.yaml
           kubectl apply -f deployment.yaml
           kubectl apply -f services.yaml
+
+      - name: Refresh Deployment
+        run: |
+          kubectl rollout restart deployment/book-store-app-notification-deployment
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/book-store-app-notification-deployment
