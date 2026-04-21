@@ -9,15 +9,15 @@ from models import Notification
 
 
 
-db_consumer=KafkaConsumer('notify.notifications',group_id="notify.sms.group",
-                             bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
-                             value_deserializer=lambda x: json.loads(x.decode("utf-8")))
-
-
 
 def start():
     print("db service Started... Listening for events to route via Email.")
     
+
+    db_consumer=KafkaConsumer('notify.notifications',group_id="notify.sms.group",
+                             bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
+                             value_deserializer=lambda x: json.loads(x.decode("utf-8")))
+
 
     for msg in db_consumer:
         data = msg.value
