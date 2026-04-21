@@ -12,9 +12,9 @@ class Settings(BaseSettings):
     KAFKA_BOOTSTRAP_SERVERS:str
     JWT_SECRET: str
     JWT_ALGORITHM: str
-    ACCESS_TOKEN_EXPIRE_MINUTES: int
-    api:str
-    email:str
+    ACCESS_TOKEN_EXPIRE_MINUTES: str
+    api: str
+    email: str
 
 
 
