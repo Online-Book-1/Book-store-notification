@@ -1,0 +1,5 @@
+.env
+docker-compose.yml
+secrets.yaml
+book_store_notification/
+ 

@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+venv/
+env/
+.pytest_cache
+.secrets
+ 
+
+
+kafka_deployment.yaml
+kafka_services.yaml
+services.yaml
+deployment.yaml
+secrets.yaml
+# OS files
+.DS_Store
+Thumbs.db
