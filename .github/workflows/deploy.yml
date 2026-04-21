@@ -43,8 +43,6 @@ jobs:
       # This will pull the 'latest' image we just pushed
       - name: Apply Kubernetes configs
         run: |
-          kubectl apply -f kafka_services.yaml
-          kubectl apply -f redis_deployment.yaml
           kubectl apply -f deployment.yaml
           kubectl apply -f services.yaml
 
