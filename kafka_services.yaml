@@ -1,3 +1,4 @@
+# kafka.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,10 +15,11 @@ spec:
     targetPort: 9093
 ---
 
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka 
+  name: kafka
 spec:
   replicas: 1
   selector:
@@ -46,7 +48,6 @@ spec:
           value: "1"
         - name: KAFKA_PROCESS_ROLES
           value: "broker,controller"
-        # We point this to the service name since pod names are now random
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
           value: "1@kafka-service:9093"
         - name: KAFKA_LISTENERS
@@ -63,10 +64,15 @@ spec:
           value: "MkU3OEVBNTcwNTJENDM2Qk"
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
+        - name: KAFKA_LOG_DIRS
+          value: "/var/lib/kafka/data"
+        - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+          value: "true"
+        - name: KAFKA_NUM_PARTITIONS
+          value: "3"
         volumeMounts:
         - name: kafka-storage
           mountPath: /var/lib/kafka/data
       volumes:
       - name: kafka-storage
         emptyDir: {}
- 
