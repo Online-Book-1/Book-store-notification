@@ -4,6 +4,8 @@ FROM python:3.11-slim
 # Set the working directory inside the container
 WORKDIR /app
 
+RUN pip freeze
+
 # Prevent Python from writing .pyc files and enable unbuffered logging
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1

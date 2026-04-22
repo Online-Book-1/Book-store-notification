@@ -35,7 +35,10 @@ jobs:
           echo "${{ secrets.KUBECONFIG2 }}" | base64 -d > ~/.kube/config
 
       - name: Apply Kafka config
+
+
         run: |
+          kubectl delete deployment --all
           kubectl apply -f kafka_services.yaml
           kubectl apply -f redis_deployment.yaml
 
