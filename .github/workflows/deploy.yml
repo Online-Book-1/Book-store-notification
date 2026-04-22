@@ -1,4 +1,3 @@
-# cicd — remove duplicate wait steps
 name: Deploy to Kubernetes
 on:
   push:
@@ -34,20 +33,20 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG2 }}" | base64 -d > ~/.kube/config
 
-      - name: Apply Kafka config
-
-
+      - name: Apply Kafka and Redis
         run: |
-          kubectl delete deployment --all
           kubectl apply -f kafka_services.yaml
           kubectl apply -f redis_deployment.yaml
 
-
-      # ← only ONE wait step
       - name: Wait for Kafka to be ready
         run: |
-          echo "Waiting for Kafka..."
-          kubectl wait --for=condition=ready pod/kafka-0 --timeout=120s
+          echo "Waiting for Kafka deployment..."
+          kubectl rollout status deployment/kafka --timeout=120s
+          echo "Kafka rolled out, waiting for pod to be ready..."
+          kubectl wait --for=condition=ready pod \
+            --selector=app=kafka \
+            --timeout=120s
+          echo "Kafka pod ready, giving extra buffer..."
           sleep 15
           echo "Kafka ready!"
 
