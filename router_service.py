@@ -3,17 +3,6 @@ from kafka import KafkaConsumer, KafkaProducer
 import json
 from config import settings
 
-producer = KafkaProducer(
-    bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
-    value_serializer=lambda x: json.dumps(x).encode('utf-8')
-)
-
-consumer = KafkaConsumer(
-    'user_events',
-    group_id='notify_router_group',
-    bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
-    value_deserializer=lambda x: json.loads(x.decode('utf-8'))
-)
 
 # --- EMAIL TEMPLATES ---
 TEMPLATE_MAP = {
@@ -74,6 +63,19 @@ TEMPLATE_MAP = {
 
 def start():
     print("Router Service Started... Listening for events.", flush=True)
+
+    
+    producer = KafkaProducer(
+    bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
+    value_serializer=lambda x: json.dumps(x).encode('utf-8')
+)
+
+    consumer = KafkaConsumer(
+    'user_events',
+    group_id='notify_router_group',
+    bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
+    value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+)
 
     for msg in consumer:
         event      = msg.value

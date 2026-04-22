@@ -4,12 +4,7 @@ from email.message import EmailMessage
 from config import settings
 import smtplib
 
-email_consumer = KafkaConsumer(
-    'notify.email',
-    group_id="notify.email.group",
-    bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVERS,
-    value_deserializer=lambda x: json.loads(x.decode("utf-8"))
-)
+
 
 SENDER_EMAIL = "hritikchoukikarwork24@gmail.com"
 SENDER_PASSWORD = settings.email
@@ -44,6 +39,13 @@ def send_email(email_data):
 
 def start():
     print("Email_sender Started... Listening for events to route via email.")
+
+    email_consumer = KafkaConsumer(
+    'notify.email',
+    group_id="notify.email.group",
+    bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVERS,
+    value_deserializer=lambda x: json.loads(x.decode("utf-8"))
+)
     
     for msg in email_consumer:
         message=msg.value
