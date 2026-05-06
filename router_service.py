@@ -75,15 +75,9 @@ def start():
     group_id='notify_router_group',
     bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
     value_deserializer=lambda x: json.loads(x.decode('utf-8')),
-    api_version=(0, 10, 2),
-    
-    # Reduced but safe timeout
-    request_timeout_ms=30000,      # 30 seconds instead of 60
-    auto_offset_reset='earliest',
-    enable_auto_commit=True,
-    # Connection logic
-    reconnect_backoff_ms=1000,     # Wait 1s between reconnection attempts
-    reconnect_backoff_max_ms=10000 # Max wait 10s if Kafka stays down
+    max_block_ms=2000,           # Don't hang for more than 2 seconds
+    request_timeout_ms=2000,     # Time to wait for a response
+    metadata_max_age_ms=30000 
 )
     for msg in consumer:
         event      = msg.value
