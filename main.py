@@ -1,7 +1,8 @@
  
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from database import get_db
+from database import get_db,engine
+from models import Base
 from models import Notification
 from contextlib import asynccontextmanager
 import db_sender  
@@ -29,7 +30,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-
+Base.metadata.create_all(bind=engine)
  
 
 
