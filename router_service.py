@@ -74,7 +74,7 @@ def start():
     'user_events',
     group_id='notify_router_group',
     bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
-    value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+    value_deserializer=lambda x: json.loads(x.decode('utf-8'),api_version=(0, 10, 2), request_timeout_ms=60000)
 )
 
     for msg in consumer:
