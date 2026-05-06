@@ -67,7 +67,7 @@ def start():
     
     producer = KafkaProducer(
     bootstrap_servers=[settings.KAFKA_BOOTSTRAP_SERVERS],
-    value_serializer=lambda x: json.dumps(x).encode('utf-8')
+    value_serializer=lambda x: json.dumps(x).encode('utf-8'),api_version=(0, 10, 2), request_timeout_ms=60000
 )
 
     consumer = KafkaConsumer(
