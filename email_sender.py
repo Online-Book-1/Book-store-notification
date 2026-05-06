@@ -44,7 +44,8 @@ def start():
     'notify.email',
     group_id="notify.email.group",
     bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVERS,
-    value_deserializer=lambda x: json.loads(x.decode("utf-8"),api_version=(0, 10, 2), request_timeout_ms=60000)
+    value_deserializer=lambda x: json.loads(x.decode("utf-8"))
+    ,api_version=(0, 10, 2), request_timeout_ms=60000
 )
     
     for msg in email_consumer:
