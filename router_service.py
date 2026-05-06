@@ -77,7 +77,7 @@ def start():
     value_deserializer=lambda x: json.loads(x.decode('utf-8')),
     api_version=(0, 10, 2),
               # Don't hang for more than 2 seconds
-    request_timeout_ms=2000,     # Time to wait for a response
+    request_timeout_ms=30000,     # Time to wait for a response
     
 )
     for msg in consumer:
