@@ -49,6 +49,18 @@ jobs:
           echo "Kafka pod ready, giving extra buffer..."
           sleep 15
           echo "Kafka ready!"
+      
+      - name: Wait 2 for Kafka to be ready
+        run: |
+          echo "Waiting for Kafka deployment..."
+          kubectl rollout status deployment/kafka --timeout=120s
+          echo "Kafka rolled out, waiting for pod to be ready..."
+          kubectl wait --for=condition=ready pod \
+            --selector=app=kafka \
+            --timeout=120s
+          echo "Kafka pod ready, giving extra buffer..."
+          sleep 15
+          echo "Kafka ready!"
 
       - name: Apply app configs
         run: |
